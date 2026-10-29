@@ -217,9 +217,9 @@ button { font: inherit; color: inherit; }
   z-index: -1;
   background: no-repeat center top;
   /* уход в цвет страницы: к абзацу «В 2024 году…» шапка уже наполовину прозрачна */
-  /* в пикселях, а не в процентах: к ~880 px от верха страницы шапка полностью уходит в фон (Irka, 2026-10-29) */
-  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 300px, rgba(0, 0, 0, .8) 440px, rgba(0, 0, 0, .55) 580px, rgba(0, 0, 0, .25) 720px, rgba(0, 0, 0, .08) 810px, transparent 880px);
-  mask-image: linear-gradient(to bottom, #000 0, #000 300px, rgba(0, 0, 0, .8) 440px, rgba(0, 0, 0, .55) 580px, rgba(0, 0, 0, .25) 720px, rgba(0, 0, 0, .08) 810px, transparent 880px);
+  /* в пикселях, а не в процентах: к ~720 px от верха страницы шапка полностью уходит в фон (Irka, 2026-10-29) */
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 220px, rgba(0, 0, 0, .78) 340px, rgba(0, 0, 0, .5) 460px, rgba(0, 0, 0, .22) 580px, rgba(0, 0, 0, .06) 660px, transparent 720px);
+  mask-image: linear-gradient(to bottom, #000 0, #000 220px, rgba(0, 0, 0, .78) 340px, rgba(0, 0, 0, .5) 460px, rgba(0, 0, 0, .22) 580px, rgba(0, 0, 0, .06) 660px, transparent 720px);
   pointer-events: none;
 }
 
@@ -535,11 +535,9 @@ button { font: inherit; color: inherit; }
   hyphens: manual;
   -webkit-hyphens: manual;
   text-wrap: balance;
-  scroll-margin-top: calc(var(--bar-h) + 96px);
-}
-
-@media (max-width: 1023px) {
-  .prose h2, .prose h3 { scroll-margin-top: calc(var(--bar-h) + 16px); }
+  /* переход по содержанию: заголовок встаёт на четверть экрана — чуть выше линии 30%,
+     где раздел становится текущим, поэтому он подсвечивается сразу */
+  scroll-margin-top: calc(var(--bar-h) + (100vh - var(--bar-h)) * .25);
 }
 
 .prose h2 {
@@ -640,7 +638,7 @@ button { font: inherit; color: inherit; }
 /* ---------- 11. Плашки и знаки ---------- */
 .plaque > * { margin: 0; }
 .plaque > * + * { margin-top: calc(var(--line) * .5); }
-.plaque h3 { scroll-margin-top: calc(var(--bar-h) + 140px); }
+.plaque h3 { scroll-margin-top: calc(var(--bar-h) + (100vh - var(--bar-h)) * .25 + 20px); }
 .plaque > h3 + .orn { margin-top: calc(var(--line) * .15); }
 .orn { white-space: nowrap; letter-spacing: 0; user-select: none; }
 .el, .sep { user-select: none; }
@@ -725,9 +723,9 @@ s { text-decoration-thickness: 1.5px; }
    Лежит вне прокручиваемого списка, чтобы не обрезался; скрипт ставит его на высоту текущего пункта. */
 .toc-marker {
   position: absolute;
-  left: -12px;
+  left: -9px;
   top: 0;
-  width: 24px;
+  width: 18px;   /* было 24 — слишком широко (Irka, 2026-10-29) */
   height: 44px;
   border-radius: 7px;
   background: var(--toc-cur);
