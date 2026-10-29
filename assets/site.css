@@ -133,7 +133,7 @@
 
 @media (max-width: 767px) {
   :root {
-    /* телефон: всё на 1 пункт (1,5 px) крупнее таблицы 3.0 (Irka, 2026-10-29) */
+    /* телефон: всё, кроме содержания, на 1 пункт (1,5 px) крупнее таблицы 3.0 (Irka, 2026-10-29) */
     --fs-h1: 27px;
     --fs-sub: 19.5px;
     --fs-author: 15px;
@@ -145,8 +145,8 @@
     --fs-qmark: 24.5px;
     --fs-quote: 16.5px;
     --fs-tr: 15.5px;
-    --fs-c2: 22px;
-    --fs-c3: 19px;
+    --fs-c2: 20.5px;   /* содержание — без прибавки (Irka, 2026-10-29) */
+    --fs-c3: 17.5px;
     --pad: 24px;
     --tr-gap: 9px;
     --half: 34px;
@@ -767,7 +767,7 @@ s { text-decoration-thickness: 1.5px; }
     bottom: auto;
     left: 0;
     width: auto;
-    height: 78svh;
+    height: 64svh;   /* было 78 — слишком огромное (Irka, 2026-10-29) */
     z-index: 39;
     background: var(--menu);
     box-shadow: 0 8px 20px rgba(0, 0, 0, .35);
@@ -776,7 +776,7 @@ s { text-decoration-thickness: 1.5px; }
     transition: transform .2s ease, visibility 0s linear .2s;
   }
   .toc-head { display: none; }
-  .toc-list { padding: 36svh var(--pad) 36svh calc(var(--pad) + 16px); scrollbar-color: var(--menu-bar) transparent; }
+  .toc-list { padding: 26svh var(--pad) 26svh calc(var(--pad) + 16px); scrollbar-color: var(--menu-bar) transparent; }
   .toc-marker { display: none; }
   .toc-list a { color: var(--menu-item); min-height: 44px; display: flex; align-items: center; }
   .toc-list li + li { margin-top: 14px; }
