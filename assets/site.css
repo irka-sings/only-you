@@ -217,8 +217,9 @@ button { font: inherit; color: inherit; }
   z-index: -1;
   background: no-repeat center top;
   /* уход в цвет страницы: к абзацу «В 2024 году…» шапка уже наполовину прозрачна */
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 34%, rgba(0, 0, 0, .8) 46%, rgba(0, 0, 0, .5) 60%, rgba(0, 0, 0, .22) 74%, rgba(0, 0, 0, .06) 86%, transparent 94%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 34%, rgba(0, 0, 0, .8) 46%, rgba(0, 0, 0, .5) 60%, rgba(0, 0, 0, .22) 74%, rgba(0, 0, 0, .06) 86%, transparent 94%);
+  /* в пикселях, а не в процентах: к ~880 px от верха страницы шапка полностью уходит в фон (Irka, 2026-10-29) */
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 300px, rgba(0, 0, 0, .8) 440px, rgba(0, 0, 0, .55) 580px, rgba(0, 0, 0, .25) 720px, rgba(0, 0, 0, .08) 810px, transparent 880px);
+  mask-image: linear-gradient(to bottom, #000 0, #000 300px, rgba(0, 0, 0, .8) 440px, rgba(0, 0, 0, .55) 580px, rgba(0, 0, 0, .25) 720px, rgba(0, 0, 0, .08) 810px, transparent 880px);
   pointer-events: none;
 }
 
