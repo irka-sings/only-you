@@ -133,19 +133,20 @@
 
 @media (max-width: 767px) {
   :root {
-    --fs-h1: 25.5px;
-    --fs-sub: 18px;
-    --fs-author: 13.5px;
-    --fs-btn: 12px;
-    --fs-card: 15px;
-    --fs-h2: 25.5px;
-    --fs-h3: 18px;
-    --fs-text: 15px;
-    --fs-qmark: 23px;
-    --fs-quote: 15px;
-    --fs-tr: 14px;
-    --fs-c2: 20.5px;
-    --fs-c3: 17.5px;
+    /* телефон: всё на 1 пункт (1,5 px) крупнее таблицы 3.0 (Irka, 2026-10-29) */
+    --fs-h1: 27px;
+    --fs-sub: 19.5px;
+    --fs-author: 15px;
+    --fs-btn: 13.5px;
+    --fs-card: 16.5px;
+    --fs-h2: 27px;
+    --fs-h3: 19.5px;
+    --fs-text: 16.5px;
+    --fs-qmark: 24.5px;
+    --fs-quote: 16.5px;
+    --fs-tr: 15.5px;
+    --fs-c2: 22px;
+    --fs-c3: 19px;
     --pad: 24px;
     --tr-gap: 9px;
     --half: 34px;
