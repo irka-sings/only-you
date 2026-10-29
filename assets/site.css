@@ -5,13 +5,14 @@
 :root,
 [data-theme="dark"] {
   color-scheme: dark;
-  --page: #1e233f;
+  --page: #1b2039;   /* чуть темнее прежнего #1e233f (Irka, 2026-10-29) */
   --text: #ffffff;
-  --link: #4385f7;
+  --link: #6aa5ff;   /* светлее прежнего #4385f7 */
   --h1: #ffffff;
   --author: #ffffff;
   --h2: #ffffff;
-  --h3: #a2a5ba;
+  --h3: #ffffff;
+  --h2-track: .02em;  /* H2 в тёмной теме разреженнее */
   --quote: #dddee2;
   --tr: #a5a7b3;
   --select: rgba(67, 133, 247, .55);
@@ -27,14 +28,14 @@
   --side-shadow: rgba(0, 0, 0, .7);
   --toc-head: #ffffff;
   --toc-cur: #ffffff;
-  --toc-item: #a2a5ba;
+  --toc-item: #8f919e;
   --toc-bar: #4a4f65;
   --menu: #13162c;
   --menu-head: #ffffff;
   --menu-cur: #ffffff;
-  --menu-item: #a2a5ba;
+  --menu-item: #8f919e;
   --menu-bar: #4a4f65;
-  --menu-dim: rgba(30, 35, 63, .8);
+  --menu-dim: rgba(27, 32, 57, .8);
   /* карточка «Обо мне» */
   --card: #d3d7ea;
   --card-fg: #07080f;
@@ -44,22 +45,26 @@
   --w-text: 300;
   --w-bold: 500;
   --w-toc: 400;
+  /* руна в шапке */
+  --rune-w: 340px;
+  --rune-top: -70px;
 }
 
 [data-theme="light"] {
   color-scheme: light;
   --page: #d9eafa;
   --text: #07080f;
-  --link: #0054b3;
+  --link: #0060d1;   /* чуть ярче прежнего #0054b3 */
   --h1: #1e233f;
   --author: #07080f;
   --h2: #17558c;
   --h3: #17558c;
+  --h2-track: 0;
   --quote: #1f2754;
   --tr: #5e5f63;
   --select: rgba(67, 133, 247, .35);
   --btn: #d9eafa;
-  --btn-fg: #17558c;
+  --btn-fg: #4778a3;   /* тише прежнего #17558c */
   --btn-on: #17558c;
   --btn-on-line: #d9eafa;
   --btn-on-fg: #ffffff;
@@ -83,6 +88,8 @@
   --w-text: 400;
   --w-bold: 700;
   --w-toc: 500;
+  --rune-w: 250px;
+  --rune-top: 0px;
 }
 
 /* узкие экраны, тёмная тема: кнопки в тон верхнему меню */
@@ -97,7 +104,7 @@
 
 /* ---------- 2. Кегли и сетка ---------- */
 :root {
-  --fonts: 'OY Deco', 'Fira Sans', 'Apple Color Emoji', 'OY Emoji', 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --fonts: 'OY Deco', 'OY Arrows', 'Fira Sans', 'Apple Color Emoji', 'OY Emoji', 'Noto Sans CJK SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --fs-h1: 46px;
   --fs-sub: 26.5px;
   --fs-author: 21px;
@@ -118,13 +125,16 @@
   --pad: 40px;                          /* поле текстовой поверхности вокруг колонки */
   --qi: clamp(16px, 7%, 50px);          /* общий левый край цитаты, кавычки и черты перевода */
   --tr-gap: 25px;                       /* от черты до текста перевода */
+  --half: 44px;                         /* половинка переключателя темы и языка */
+  --media-gap: 10px;                    /* между медиа подряд (было: строка) */
+  --toc-gap: 20px;                      /* между любыми пунктами бокового содержания */
   --bar-h: 0px;                         /* высота верхней полосы меню (есть только на узких) */
 }
 
 @media (max-width: 767px) {
   :root {
     --fs-h1: 25.5px;
-    --fs-sub: 16.5px;
+    --fs-sub: 18px;
     --fs-author: 13.5px;
     --fs-btn: 12px;
     --fs-card: 15px;
@@ -138,6 +148,7 @@
     --fs-c3: 17.5px;
     --pad: 24px;
     --tr-gap: 9px;
+    --half: 34px;
   }
 }
 
@@ -204,9 +215,9 @@ button { font: inherit; color: inherit; }
   height: 1080px;
   z-index: -1;
   background: no-repeat center top;
-  /* уход в цвет страницы — нелинейно, нижние ~40% */
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 52%, rgba(0, 0, 0, .75) 66%, rgba(0, 0, 0, .4) 80%, rgba(0, 0, 0, .12) 91%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 52%, rgba(0, 0, 0, .75) 66%, rgba(0, 0, 0, .4) 80%, rgba(0, 0, 0, .12) 91%, transparent 100%);
+  /* уход в цвет страницы: к абзацу «В 2024 году…» шапка уже наполовину прозрачна */
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 34%, rgba(0, 0, 0, .8) 46%, rgba(0, 0, 0, .5) 60%, rgba(0, 0, 0, .22) 74%, rgba(0, 0, 0, .06) 86%, transparent 94%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 34%, rgba(0, 0, 0, .8) 46%, rgba(0, 0, 0, .5) 60%, rgba(0, 0, 0, .22) 74%, rgba(0, 0, 0, .06) 86%, transparent 94%);
   pointer-events: none;
 }
 
@@ -221,20 +232,41 @@ button { font: inherit; color: inherit; }
   [data-theme="light"] .hero-bg { background-image: url(header/only-you-header-light-1312.webp); }
 }
 @media (max-width: 767px) {
-  .hero-bg { height: auto; aspect-ratio: 1080 / 1500; background-size: 100% auto; top: var(--bar-h); }
+  .hero-bg {
+    height: auto;
+    aspect-ratio: 1080 / 1500;
+    background-size: 100% auto;
+    top: var(--bar-h);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 40%, rgba(0, 0, 0, .7) 55%, rgba(0, 0, 0, .35) 72%, rgba(0, 0, 0, .1) 87%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 40%, rgba(0, 0, 0, .7) 55%, rgba(0, 0, 0, .35) 72%, rgba(0, 0, 0, .1) 87%, transparent 100%);
+  }
   [data-theme="dark"] .hero-bg { background-image: url(header/only-you-header-dark-1080.webp); }
   [data-theme="light"] .hero-bg { background-image: url(header/only-you-header-light-1080.webp); }
 }
 
-/* руна (тёмная тема) и кристалл (светлая) — отдельным слоем */
+/* подложка цвета страницы под фоном шапки: без неё руна в режиме Screen
+   смешивается с пустотой и даёт тёмный прямоугольник */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1080px;
+  z-index: -2;
+  background: var(--page);
+}
+@media (max-width: 767px) {
+  .hero::before { height: calc(var(--bar-h) + 100vw * 1500 / 1080); }
+}
+
+/* руна (тёмная тема) и кристалл (светлая) — отдельным слоем; может уходить за верх окна */
 .rune {
   position: absolute;
   z-index: -1;
-  width: 200px;
+  width: var(--rune-w);
   aspect-ratio: 515 / 1002;
-  top: 40px;
+  top: var(--rune-top);
   /* посередине между краем окна и левым краем блока заголовка */
-  left: calc((100% - var(--head)) / 4 - 100px);
+  left: calc((100% - var(--head)) / 4 - var(--rune-w) / 2);
   background: no-repeat center / contain;
   pointer-events: none;
 }
@@ -246,10 +278,12 @@ button { font: inherit; color: inherit; }
   .rune { left: auto; right: 24px; }
 }
 @media (max-width: 1023px) {
-  .rune { left: auto; right: 16px; top: calc(var(--bar-h) + 24px); width: 160px; }
+  .rune { left: auto; right: 16px; top: calc(var(--bar-h) + var(--rune-top)); width: calc(var(--rune-w) * .7); }
 }
 @media (max-width: 767px) {
-  .rune { right: -6px; top: calc(var(--bar-h) + 16px); width: 120px; }
+  [data-theme="dark"] { --rune-w: 180px; --rune-top: -40px; }
+  [data-theme="light"] { --rune-w: 120px; --rune-top: 0px; }
+  .rune { right: -6px; width: var(--rune-w); }
 }
 
 .head {
@@ -269,7 +303,7 @@ button { font: inherit; color: inherit; }
 }
 
 .subhead {
-  margin: .55em 0 0;
+  margin: calc(.55em + var(--line) * .5) 0 0;   /* +полстроки (Irka, 2026-10-29) */
   color: var(--h1);
   font-size: var(--fs-sub);
   font-weight: 400;
@@ -290,6 +324,7 @@ button { font: inherit; color: inherit; }
   display: flex;
   align-items: center;
   gap: 14px;
+  margin: 0;
   color: var(--author);
   font-size: var(--fs-author);
   font-weight: var(--w-author);
@@ -300,7 +335,10 @@ button { font: inherit; color: inherit; }
 @media (max-width: 767px) {
   .hero { padding-top: calc(var(--bar-h) + 24px); }
   .head h1 { max-width: none; }
-  .byline { margin-top: 28px; gap: 16px; }
+  /* светлая тема: подзаголовок не заходит на кристалл */
+  [data-theme="light"] .subhead { padding-right: calc(var(--rune-w) - 14px); }
+  /* от подзаголовка до автора — столько же, сколько от автора до кнопок */
+  .byline { margin-top: 20px; gap: 20px 16px; }
   .author img { width: 40px; height: 40px; }
   .author { gap: 10px; }
 }
@@ -314,22 +352,19 @@ button { font: inherit; color: inherit; }
 }
 
 .btn,
-.btn-group {
+.switch {
   border-radius: 7px;
   box-shadow: 0 0 15px var(--btn-shadow);
 }
 
-.btn-group { display: inline-flex; }
-.btn-group .btn { box-shadow: none; border-radius: 0; }
-.btn-group .btn:first-child { border-radius: 7px 0 0 7px; }
-.btn-group .btn:last-child { border-radius: 0 7px 7px 0; }
-
-.btn {
+.btn,
+.half {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   height: 40px;
-  padding: 0 14px;
+  padding: 2px 14px 0;   /* +2 px сверху: у Fira буквы сидят выше середины */
   border: 1px solid transparent;
   background: var(--btn);
   color: var(--btn-fg);
@@ -338,41 +373,69 @@ button { font: inherit; color: inherit; }
   line-height: 1;
   text-decoration: none;
   white-space: nowrap;
-  cursor: pointer;
 }
 
-.btn:hover { filter: brightness(1.12); text-decoration: none; }
+.btn { cursor: pointer; }
+.btn:hover, .switch:hover .half { filter: brightness(1.12); text-decoration: none; }
 
-.btn.is-on,
-.btn[aria-current="page"] {
+/* «Обо мне» и «Для спидраннеров» — синие, белые буквы (в тон сайдбару) */
+.btn.act {
   background: var(--btn-on);
   border-color: var(--btn-on-line);
   color: var(--btn-on-fg);
-  cursor: default;
-  filter: none;
 }
 
-.btn svg { width: 22px; height: 22px; fill: currentColor; flex: none; }
-.btn.icon { padding: 0 9px; }
+/* переключатели темы и языка: одна кнопка целиком, половинки одинаковой ширины */
+.switch {
+  display: inline-flex;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-decoration: none;
+  cursor: pointer;
+}
+.switch .half { width: var(--half); padding-left: 0; padding-right: 0; }
+.switch .half:first-child { border-radius: 7px 0 0 7px; }
+.switch .half:last-child { border-radius: 0 7px 7px 0; }
+.switch .half.on,
+[data-theme="light"] .theme-switch [data-half="light"],
+[data-theme="dark"] .theme-switch [data-half="dark"] {
+  background: var(--btn-on);
+  border-color: var(--btn-on-line);
+  color: var(--btn-on-fg);
+  filter: none;
+}
+.theme-switch .half { padding-top: 0; }
+
+.btn svg, .half svg { width: 22px; height: 22px; fill: currentColor; flex: none; }
+.btn.speed { padding-left: 9px; gap: 6px; }
+.btn.speed svg { margin-top: -2px; }
 
 @media (max-width: 767px) {
   .buttons { gap: 8px; }
-  .btn { height: 32px; padding: 0 8px; gap: 5px; border-radius: 6px; }
-  .btn.icon { padding: 0 6px; }
-  .btn svg { width: 17px; height: 17px; }
-  .theme-float { left: 12px; bottom: 12px; }
+  .btn, .half { height: 32px; padding: 2px 8px 0; gap: 5px; }
+  .btn, .switch { border-radius: 6px; }
+  .switch .half:first-child { border-radius: 6px 0 0 6px; }
+  .switch .half:last-child { border-radius: 0 6px 6px 0; }
+  .btn svg, .half svg { width: 17px; height: 17px; }
+  .btn.speed { padding-left: 5px; gap: 4px; }
 }
 
-/* плавающий переключатель темы: левый нижний угол */
+/* плавающий переключатель темы: десктоп — левый нижний угол;
+   узкие экраны — только при раскрытом меню, по центру внизу */
 .theme-float {
   position: fixed;
   left: 20px;
   bottom: 20px;
-  z-index: 30;
+  z-index: 41;
 }
 
 @media (min-width: 1024px) and (max-width: 1135px) {
   .theme-float { display: none; }
+}
+@media (max-width: 1023px) {
+  .theme-float { display: none; left: 50%; bottom: 24px; transform: translateX(-50%); }
+  .menu-open .theme-float { display: block; }
 }
 
 /* ---------- 7. Попап «Обо мне» ---------- */
@@ -397,13 +460,16 @@ button { font: inherit; color: inherit; }
 
 .about ul { list-style: none; margin: 14px 0 0; padding: 0; }
 .about li a {
-  display: flex;
+  display: grid;
+  grid-template-columns: 19px auto;
+  justify-content: start;
   align-items: center;
-  gap: 9px;
+  column-gap: 9px;
   min-height: 30px;
   color: inherit;
+  overflow-wrap: anywhere;
 }
-.about li svg { width: 19px; height: 19px; fill: currentColor; flex: none; }
+.about li svg { display: block; width: 19px; height: 19px; fill: currentColor; }
 
 .about-close {
   position: absolute;
@@ -423,7 +489,8 @@ button { font: inherit; color: inherit; }
 .about-close svg { width: 15px; height: 15px; }
 
 @media (max-width: 767px) {
-  .about li a { min-height: 44px; }
+  .about { padding: 18px 20px 12px; }
+  .about li a { min-height: 36px; }
   .about-close { width: 44px; height: 44px; top: 2px; right: 2px; }
 }
 
@@ -443,7 +510,7 @@ button { font: inherit; color: inherit; }
 }
 
 @media (max-width: 767px) {
-  .article { margin-top: 36px; padding-top: 12px; }
+  .article { margin-top: 36px; padding-top: 12px; background: none; }
 }
 
 .prose {
@@ -479,6 +546,7 @@ button { font: inherit; color: inherit; }
   font-weight: 700;
   font-style: italic;
   line-height: 1.08;
+  letter-spacing: var(--h2-track);
 }
 
 .prose h3 {
@@ -491,6 +559,7 @@ button { font: inherit; color: inherit; }
 .prose h3.center { color: var(--text); text-align: center; }
 
 .prose .b { font-weight: var(--w-bold); }
+.prose .arr { font-size: calc(var(--fs-text) + 3px); line-height: 1.15; }
 .prose .c,
 .prose .el,
 .prose .orn,
@@ -509,6 +578,12 @@ button { font: inherit; color: inherit; }
 /* заголовок → текст под ним вплотную; заголовок → заголовок — строка */
 .prose > :is(h2, h3) + * { margin-top: 0; }
 .prose > :is(h2, h3) + :is(h2, h3, .plaque) { margin-top: var(--line); }
+
+/* над H2 — две строки (Irka, 2026-10-29) */
+.prose > * + h2 { margin-top: calc(var(--line) * 2); }
+
+/* медиа подряд — несколько пикселей, а не строка */
+.prose > .m + .m { margin-top: var(--media-gap); }
 
 /* знак по центру (❄ ↓ 💧) → полстроки до своего абзаца */
 .prose > .el + * { margin-top: calc(var(--line) * .5); }
@@ -533,8 +608,8 @@ button { font: inherit; color: inherit; }
 .qmark {
   font-size: var(--fs-qmark);
   line-height: 1;
+  height: .62em;          /* знак ❝ сидит в верхней части строки — срезаем пустой низ */
   color: var(--quote);
-  margin-bottom: 0;
   user-select: none;
 }
 
@@ -551,19 +626,20 @@ button { font: inherit; color: inherit; }
   content: '';
   position: absolute;
   left: 0;
-  top: -3px;
-  bottom: -3px;
+  top: -2px;
+  bottom: -2px;
   width: 1px;
   background: var(--tr);
 }
 @media (max-width: 767px) {
-  .tr::before { width: .75px; top: -2px; bottom: -2px; }
+  .tr::before { width: .75px; top: -1px; bottom: -1px; }
 }
 
 /* ---------- 11. Плашки и знаки ---------- */
 .plaque > * { margin: 0; }
 .plaque > * + * { margin-top: calc(var(--line) * .5); }
 .plaque h3 { scroll-margin-top: calc(var(--bar-h) + 140px); }
+.plaque > h3 + .orn { margin-top: calc(var(--line) * .15); }
 .orn { white-space: nowrap; letter-spacing: 0; user-select: none; }
 .el, .sep { user-select: none; }
 s { text-decoration-thickness: 1.5px; }
@@ -640,24 +716,24 @@ s { text-decoration-thickness: 1.5px; }
 .toc-list a:hover { color: var(--toc-cur); }
 .toc-list .l2 a { font-size: var(--fs-c2); }
 .toc-list .l3 a { font-size: var(--fs-c3); padding-left: 35px; }
-.toc-list .l2 { margin-top: 24px; }
-.toc-list .l2:first-child { margin-top: 0; }
-.toc-list .l2 + .l3 { margin-top: 10px; }
-.toc-list .l3 + .l3 { margin-top: 12px; }
+.toc-list li + li { margin-top: var(--toc-gap); }   /* все отступы одинаковые */
 
 .toc-list .is-current a { color: var(--toc-cur); }
-/* маркер «ты здесь» — часть строки текущего пункта, выступает за левый край */
-.toc-list .is-current::before {
-  content: '';
+/* маркер «ты здесь» (десктоп) — «нашлёпка» на левой границе сайдбара, наполовину снаружи.
+   Лежит вне прокручиваемого списка, чтобы не обрезался; скрипт ставит его на высоту текущего пункта. */
+.toc-marker {
   position: absolute;
-  left: -34px;
-  top: 50%;
-  width: 12px;
+  left: -12px;
+  top: 0;
+  width: 24px;
   height: 44px;
-  margin-top: -22px;
-  border-radius: 6px;
+  border-radius: 7px;
   background: var(--toc-cur);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
 }
+.toc-marker.on { opacity: 1; }
 
 .toc-close,
 .menubar,
@@ -700,14 +776,25 @@ s { text-decoration-thickness: 1.5px; }
   }
   .toc-head { display: none; }
   .toc-list { padding: 36svh var(--pad) 36svh calc(var(--pad) + 16px); scrollbar-color: var(--menu-bar) transparent; }
+  .toc-marker { display: none; }
   .toc-list a { color: var(--menu-item); min-height: 44px; display: flex; align-items: center; }
-  .toc-list .l2, .toc-list .l2:first-child { margin-top: 12px; }
-  .toc-list .l2 + .l3, .toc-list .l3 + .l3 { margin-top: 0; }
+  .toc-list li + li { margin-top: 14px; }
   .toc-list .l3 a { padding-left: 29px; }
   .toc-list .is-current a { color: var(--menu-cur); }
   .toc-list .l2.is-current a { font-size: calc(var(--fs-c2) + 5px); }
   .toc-list .l3.is-current a { font-size: calc(var(--fs-c3) + 5px); }
-  .toc-list .is-current::before { left: calc(-1 * (var(--pad) + 16px)); background: var(--menu-cur); border-radius: 0 6px 6px 0; }
+  /* маркер в мобильном меню — часть строки текущего пункта, едет вместе с ним */
+  .toc-list .is-current::before {
+    content: '';
+    position: absolute;
+    left: calc(-1 * (var(--pad) + 16px));
+    top: 50%;
+    width: 11px;
+    height: 44px;
+    margin-top: -22px;
+    border-radius: 0 6px 6px 0;
+    background: var(--menu-cur);
+  }
 
   .toc-close {
     display: grid;

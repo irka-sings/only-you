@@ -11,30 +11,29 @@
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var narrow = window.matchMedia('(max-width: 1023px)');
 
-  /* ---------- Тема ---------- */
-  var THEME_BG = { dark: '#1e233f', light: '#d9eafa' };
+  /* ---------- Тема: переключатель — одна кнопка целиком ---------- */
+  var THEME_BG = { dark: '#1b2039', light: '#d9eafa' };
   var BAR_BG = { dark: '#13162c', light: '#17558c' };
+  var LABEL = root.lang === 'en'
+    ? { dark: 'Switch to light theme', light: 'Switch to dark theme' }
+    : { dark: 'Включить светлую тему', light: 'Включить тёмную тему' };
 
-  function paintThemeButtons() {
+  function paintTheme() {
     var t = root.dataset.theme;
-    document.querySelectorAll('[data-set-theme]').forEach(function (b) {
-      var on = b.dataset.setTheme === t;
-      b.classList.toggle('is-on', on);
-      b.setAttribute('aria-pressed', on ? 'true' : 'false');
-    });
+    document.querySelectorAll('[data-toggle-theme]').forEach(function (b) { b.setAttribute('aria-label', LABEL[t]); });
     var meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.content = narrow.matches ? BAR_BG[t] : THEME_BG[t];
   }
 
   document.addEventListener('click', function (e) {
-    var b = e.target.closest('[data-set-theme]');
-    if (!b) return;
-    root.dataset.theme = b.dataset.setTheme;
-    store.set('oy-theme', b.dataset.setTheme);
-    paintThemeButtons();
+    if (!e.target.closest('[data-toggle-theme]')) return;
+    var t = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = t;
+    store.set('oy-theme', t);
+    paintTheme();
   });
-  narrow.addEventListener('change', paintThemeButtons);
-  paintThemeButtons();
+  narrow.addEventListener('change', paintTheme);
+  paintTheme();
 
   /* ---------- Попап «Обо мне»: под кнопкой, с зазором ---------- */
   var about = document.getElementById('about');
@@ -58,6 +57,7 @@
     return document.getElementById(li.querySelector('a').getAttribute('href').slice(1));
   });
   var barTitle = document.querySelector('.menubar span');
+  var marker = toc && toc.querySelector('.toc-marker');
   var current = -1;
   var hoverSide = false;
   var recenterTimer = null;
@@ -67,6 +67,17 @@
     var li = items[i];
     var top = li.offsetTop - list.clientHeight / 2 + li.offsetHeight / 2;
     list.scrollTo({ top: top, behavior: smooth && !reduceMotion ? 'smooth' : 'auto' });
+  }
+
+  // «нашлёпка» в сайдбаре стоит на высоте текущего пункта и едет с ним при прокрутке списка
+  function placeMarker() {
+    if (!marker || current < 0 || narrow.matches) return;
+    var a = items[current].getBoundingClientRect();
+    var t = toc.getBoundingClientRect();
+    var l = list.getBoundingClientRect();
+    var mid = a.top + a.height / 2;
+    marker.style.transform = 'translateY(' + Math.round(mid - t.top - 22) + 'px)';
+    marker.classList.toggle('on', mid > l.top + 10 && mid < l.bottom - 10);
   }
 
   function setCurrent(i) {
@@ -80,6 +91,7 @@
     if (barTitle && !root.classList.contains('menu-open')) barTitle.innerHTML = items[i].querySelector('a').innerHTML;
     // в открытом мобильном меню «ты здесь» не меняется под пальцем; в сайдбаре — держим по центру
     if (!narrow.matches && !hoverSide) centerList(i, true);
+    placeMarker();
   }
 
   // раздел становится текущим, когда его заголовок поднялся выше линии ~30% экрана
@@ -102,9 +114,10 @@
     ticking = true;
     requestAnimationFrame(function () { ticking = false; spy(); savePlace(); });
   }, { passive: true });
-  window.addEventListener('resize', function () { spy(); if (!narrow.matches) centerList(current, false); });
+  window.addEventListener('resize', function () { spy(); if (!narrow.matches) centerList(current, false); placeMarker(); });
 
   if (list) {
+    list.addEventListener('scroll', function () { requestAnimationFrame(placeMarker); }, { passive: true });
     // ручная прокрутка списка мышью: маркер едет со своим пунктом, потом список возвращается
     toc.addEventListener('mouseenter', function () { hoverSide = true; clearTimeout(recenterTimer); });
     toc.addEventListener('mouseleave', function () {
@@ -197,4 +210,6 @@
 
   spy();
   if (!narrow.matches) centerList(current, false);
+  placeMarker();
+  if (document.fonts) document.fonts.ready.then(function () { if (!narrow.matches) centerList(current, false); placeMarker(); });
 })();
