@@ -37,10 +37,16 @@
 
   /* ---------- Попап «Обо мне»: под кнопкой, с зазором ---------- */
   var about = document.getElementById('about');
+  // карточку открывают и кнопка «Обо мне», и имя автора — встаём под тем, на что нажали
+  var invoker = null;
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[popovertarget="about"]:not(.about-close)');
+    if (b) invoker = b;
+  }, true);
   if (about) {
     about.addEventListener('toggle', function (e) {
       if (e.newState !== 'open') return;
-      var btn = document.querySelector('[popovertarget="about"]');
+      var btn = invoker || document.querySelector('.author');
       var r = btn.getBoundingClientRect();
       var w = about.offsetWidth;
       var left = Math.min(r.left, document.documentElement.clientWidth - w - 16);

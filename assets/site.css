@@ -48,6 +48,8 @@
   /* руна в шапке */
   --rune-w: 340px;
   --rune-top: -70px;
+  --info-bg: #ffffff;
+  --info-fg: #1b2039;
 }
 
 [data-theme="light"] {
@@ -90,6 +92,8 @@
   --w-toc: 500;
   --rune-w: 250px;
   --rune-top: 0px;
+  --info-bg: #17558c;
+  --info-fg: #ffffff;
 }
 
 /* узкие экраны, тёмная тема: кнопки в тон верхнему меню */
@@ -124,7 +128,7 @@
   --side-w: 320px;
   --pad: 40px;                          /* поле текстовой поверхности вокруг колонки */
   --qi: clamp(16px, 7%, 50px);          /* общий левый край цитаты, кавычки и черты перевода */
-  --tr-gap: 25px;                       /* от черты до текста перевода */
+  --tr-gap: 18px;                       /* от черты до текста перевода (было 25) */
   --half: 44px;                         /* половинка переключателя темы и языка */
   --media-gap: 10px;                    /* между медиа подряд (было: строка) */
   --toc-gap: 20px;                      /* между любыми пунктами бокового содержания */
@@ -148,7 +152,7 @@
     --fs-c2: 20.5px;   /* содержание — без прибавки (Irka, 2026-10-29) */
     --fs-c3: 17.5px;
     --pad: 24px;
-    --tr-gap: 9px;
+    --tr-gap: 7px;
     --half: 34px;
   }
 }
@@ -172,7 +176,11 @@ html {
   text-size-adjust: 100%;
 }
 
+/* светлая тема: корень страницы на тон темнее, чем фон текста. Chrome на Android красит полосу
+   системных кнопок по корню — так она еле-еле отличается от страницы (опыт, Irka 2026-10-30) */
+[data-theme="light"] { background: #cfe0f3; }
 body {
+  min-height: 100vh;
   margin: 0;
   background: var(--page);
   color: var(--text);
@@ -217,9 +225,9 @@ button { font: inherit; color: inherit; }
   z-index: -1;
   background: no-repeat center top;
   /* уход в цвет страницы: к абзацу «В 2024 году…» шапка уже наполовину прозрачна */
-  /* в пикселях, а не в процентах: к ~720 px от верха страницы шапка полностью уходит в фон (Irka, 2026-10-29) */
-  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 220px, rgba(0, 0, 0, .78) 340px, rgba(0, 0, 0, .5) 460px, rgba(0, 0, 0, .22) 580px, rgba(0, 0, 0, .06) 660px, transparent 720px);
-  mask-image: linear-gradient(to bottom, #000 0, #000 220px, rgba(0, 0, 0, .78) 340px, rgba(0, 0, 0, .5) 460px, rgba(0, 0, 0, .22) 580px, rgba(0, 0, 0, .06) 660px, transparent 720px);
+  /* в пикселях, а не в процентах: к ~780 px от верха страницы шапка полностью уходит в фон (Irka, 2026-10-29) */
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 260px, rgba(0, 0, 0, .78) 390px, rgba(0, 0, 0, .5) 510px, rgba(0, 0, 0, .22) 630px, rgba(0, 0, 0, .06) 715px, transparent 780px);
+  mask-image: linear-gradient(to bottom, #000 0, #000 260px, rgba(0, 0, 0, .78) 390px, rgba(0, 0, 0, .5) 510px, rgba(0, 0, 0, .22) 630px, rgba(0, 0, 0, .06) 715px, transparent 780px);
   pointer-events: none;
 }
 
@@ -283,9 +291,11 @@ button { font: inherit; color: inherit; }
   .rune { left: auto; right: 16px; top: calc(var(--bar-h) + var(--rune-top)); width: calc(var(--rune-w) * .7); }
 }
 @media (max-width: 767px) {
-  [data-theme="dark"] { --rune-w: 180px; --rune-top: -40px; }
-  [data-theme="light"] { --rune-w: 120px; --rune-top: 0px; }
-  .rune { right: -6px; width: var(--rune-w); }
+  /* по макету Irka 2026-10-30 */
+  /* по макету Irka 2026-10-30; размеры посчитаны по видимой части знака (у файлов прозрачные поля) */
+  [data-theme="dark"] { --rune-w: 147px; --rune-top: -8px; --rune-right: -23px; }
+  [data-theme="light"] { --rune-w: 140px; --rune-top: -21px; --rune-right: -7px; }
+  .rune { right: var(--rune-right); width: var(--rune-w); }
 }
 
 .head {
@@ -327,9 +337,40 @@ button { font: inherit; color: inherit; }
   align-items: center;
   gap: 14px;
   margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
   color: var(--author);
+  font: inherit;
   font-size: var(--fs-author);
   font-weight: var(--w-author);
+  text-align: left;
+  cursor: pointer;
+}
+.author .info { display: none; }
+
+/* Когда автор и кнопки уже не помещаются в одну строку:
+   «Обо мне» превращается в значок ⓘ у имени (карточку открывает имя со значком),
+   переключатели — слева рядом, «Для спидраннеров» — к правому краю. Макет Irka 2026-10-30. */
+.head { container-type: inline-size; }
+@container (max-width: 860px) {
+  .byline { flex-direction: column; align-items: stretch; gap: 20px; }
+  .buttons .about-btn { display: none; }
+  .author { align-self: flex-start; min-height: 44px; padding-right: 14px; }   /* зона нажатия не ниже 44 px */
+  .author .name { position: relative; }
+  .author .info {
+    display: inline-grid;
+    place-items: center;
+    width: 17px;
+    height: 17px;
+    margin: -1em 0 0 -8px;     /* как надстрочный значок у конца имени */
+    border-radius: 50%;
+    background: var(--info-bg);
+    color: var(--info-fg);
+  }
+  .author .info svg { width: 11px; height: 11px; fill: currentColor; }
+  .buttons { gap: 12px; }
+  .buttons .speed { margin-left: auto; }
 }
 
 .author img { width: 64px; height: 64px; border-radius: 50%; display: block; }
@@ -338,7 +379,7 @@ button { font: inherit; color: inherit; }
   .hero { padding-top: calc(var(--bar-h) + 24px); }
   .head h1 { max-width: none; }
   /* светлая тема: подзаголовок не заходит на кристалл */
-  [data-theme="light"] .subhead { padding-right: calc(var(--rune-w) - 14px); }
+  [data-theme="light"] .subhead { padding-right: 118px; }   /* видимый кристалл: 110 px + 8 от края */
   /* от подзаголовка до автора — столько же, сколько от автора до кнопок */
   .byline { margin-top: 20px; gap: 20px 16px; }
   .author img { width: 40px; height: 40px; }
@@ -379,6 +420,11 @@ button { font: inherit; color: inherit; }
 
 .btn { cursor: pointer; }
 .btn:hover, .switch:hover .half { filter: brightness(1.12); text-decoration: none; }
+
+/* абрис тоньше: на плотных экранах — полпикселя (на обычных тоньше 1 px не бывает) */
+@media (min-resolution: 2dppx) {
+  .btn, .half { border-width: .5px; }
+}
 
 /* «Обо мне» и «Для спидраннеров» — синие, белые буквы (в тон сайдбару) */
 .btn.act {
@@ -559,7 +605,7 @@ button { font: inherit; color: inherit; }
 .prose h3.center { color: var(--text); text-align: center; }
 
 .prose .b { font-weight: var(--w-bold); }
-.prose .arr { font-size: calc(var(--fs-text) + 3px); line-height: 1.15; }
+/* .arr — строка из стрелок; крупнее теперь все стрелки сразу (size-adjust в fonts.css) */
 .prose .c,
 .prose .el,
 .prose .orn,
@@ -723,11 +769,11 @@ s { text-decoration-thickness: 1.5px; }
    Лежит вне прокручиваемого списка, чтобы не обрезался; скрипт ставит его на высоту текущего пункта. */
 .toc-marker {
   position: absolute;
-  left: -9px;
+  left: 0;
   top: 0;
-  width: 18px;   /* было 24 — слишком широко (Irka, 2026-10-29) */
+  width: 9px;    /* половинка: маркер не выходит за сайдбар и не выглядит ручкой (Irka, 2026-10-30) */
   height: 44px;
-  border-radius: 7px;
+  border-radius: 0 6px 6px 0;
   background: var(--toc-cur);
   opacity: 0;
   pointer-events: none;
