@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://irka-sings.github.io/only-you/ru/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://irka-sings.github.io/only-you/ru/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://irka-sings.github.io/only-you/en/"/>
+  </url>
+  <url>
+    <loc>https://irka-sings.github.io/only-you/en/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://irka-sings.github.io/only-you/ru/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://irka-sings.github.io/only-you/en/"/>
+  </url>
+  <url>
+    <loc>https://irka-sings.github.io/only-you/ru/speedrun/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://irka-sings.github.io/only-you/ru/speedrun/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://irka-sings.github.io/only-you/en/speedrun/"/>
+  </url>
+  <url>
+    <loc>https://irka-sings.github.io/only-you/en/speedrun/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://irka-sings.github.io/only-you/ru/speedrun/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://irka-sings.github.io/only-you/en/speedrun/"/>
+  </url>
+</urlset>
