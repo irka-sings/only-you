@@ -56,7 +56,7 @@
   color-scheme: light;
   --page: #d9eafa;
   --text: #07080f;
-  --link: #0060d1;   /* чуть ярче прежнего #0054b3 */
+  --link: #004ee6;   /* насыщенный экранный синий (Irka, 2026-10-31: «как в CMYK»); контраст 5,3 */
   --h1: #1e233f;
   --author: #07080f;
   --h2: #17558c;
@@ -294,8 +294,8 @@ button { font: inherit; color: inherit; }
 @media (max-width: 767px) {
   /* по макету Irka 2026-10-30 */
   /* по макету Irka 2026-10-30; размеры посчитаны по видимой части знака (у файлов прозрачные поля) */
-  [data-theme="dark"] { --rune-w: 147px; --rune-top: -8px; --rune-right: -23px; }
-  [data-theme="light"] { --rune-w: 140px; --rune-top: -21px; --rune-right: -7px; }
+  [data-theme="dark"] { --rune-w: 165px; --rune-top: -34px; --rune-right: -26px; }   /* выше и крупнее (2026-10-31) */
+  [data-theme="light"] { --rune-w: 140px; --rune-top: -21px; --rune-right: -22px; }  /* правее, чуть обрезается */
   .rune { right: var(--rune-right); width: var(--rune-w); }
 }
 
@@ -380,7 +380,7 @@ button { font: inherit; color: inherit; }
   .hero { padding-top: calc(var(--bar-h) + 24px); }
   .head h1 { max-width: none; }
   /* светлая тема: подзаголовок не заходит на кристалл */
-  [data-theme="light"] .subhead { padding-right: 118px; }   /* видимый кристалл: 110 px + 8 от края */
+  [data-theme="light"] .subhead { padding-right: 104px; }   /* видимый кристалл после сдвига вправо */
   /* от подзаголовка до автора — столько же, сколько от автора до кнопок */
   .byline { margin-top: 20px; gap: 20px 16px; }
   .author img { width: 40px; height: 40px; }
@@ -613,11 +613,12 @@ button { font: inherit; color: inherit; }
 
 .prose h3.center { color: var(--text); text-align: center; }
 /* «Что установлено» — кульминация: цветом основного текста, а не синим (Irka, 2026-10-31) */
-.prose h2#chto-ustanovleno { color: var(--text); }
+.prose h2:is(#chto-ustanovleno, #what-was-established) { color: var(--text); }
 /* плашка «Вывод не может быть сделан без фактов» — размер и начертание H3-Center, в содержание не входит */
 .prose .plaque.diamond > .c { font-size: var(--fs-h3); font-weight: 500; line-height: 1.1; text-wrap: balance; }
 
 .prose .b { font-weight: var(--w-bold); }
+.nobr { white-space: nowrap; }   /* «куда-то», «из-за» — без разрыва на дефисе */
 /* .arr — строка из стрелок; крупнее теперь все стрелки сразу (size-adjust в fonts.css) */
 .prose .c,
 .prose .el,
@@ -705,7 +706,7 @@ button { font: inherit; color: inherit; }
 .orn { white-space: nowrap; letter-spacing: 0; user-select: none; }
 .el, .sep { user-select: none; }
 /* снежинка-эмодзи почти белая — в светлой теме тонкая синяя обводка */
-[data-theme="light"] .el.snow { filter: drop-shadow(0 0 .6px #17558c) drop-shadow(0 0 .6px #17558c) drop-shadow(0 0 .4px #17558c); }
+[data-theme="light"] .el.snow { filter: drop-shadow(0 0 .6px #5d89b0) drop-shadow(0 0 .6px #5d89b0) drop-shadow(0 0 .4px #5d89b0); }   /* обводка посветлее */
 s { text-decoration-thickness: 1.5px; }
 
 /* ---------- 12. Картинки и видео ---------- */
@@ -887,7 +888,70 @@ s { text-decoration-thickness: 1.5px; }
   .toc, .menu-open .toc { transition: none; }
 }
 
-/* ---------- 15. Печать — светлая ---------- */
+/* ---------- 15. Страница «Для спидраннеров» (styles.md, 3.2): без сайдбара, меню и кнопок ---------- */
+.speed {
+  --bar-h: 0px;
+  --head: calc(var(--col) + 2 * var(--pad));   /* руна встаёт между краем окна и текстовой поверхностью */
+}
+.speed .page { margin-right: 0; }
+.speed .hero { padding-top: 56px; }
+.back-to {
+  position: relative;
+  display: block;
+  max-width: calc(var(--col) + 2 * var(--pad));
+  margin: 0 auto;
+  padding: 0 var(--pad);
+  color: var(--back);
+  font-size: var(--fs-back);
+  font-weight: var(--w-back);
+  line-height: 1.2;
+  text-decoration: none;
+}
+.back-to:hover { text-decoration: underline; }
+/* не больше двух строк, лишнее — многоточием по целому слову */
+.back-to { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
+.back-to .arrow { position: absolute; left: calc(var(--pad) - 1.4em); }
+.speed .article { margin-top: 24px; }
+.speed .prose h1 {
+  margin: 0;
+  color: var(--speed-h1);
+  font-size: var(--fs-speed-h1);
+  font-weight: var(--w-h1);
+  line-height: 1.08;
+  text-wrap: balance;
+  hyphens: manual;
+  overflow-wrap: normal;   /* слово в заголовке не рвём посередине */
+}
+.speed .prose .read {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: calc(var(--line) * .5);
+  color: var(--read);
+}
+.speed .prose .read svg { width: 1.1em; height: 1.1em; fill: currentColor; flex: none; }
+.speed .prose > .read + * { margin-top: var(--line); }
+.prose .to-full { text-align: center; margin-top: calc(var(--line) * 1.5); }
+.prose .to-full .btn { height: auto; min-height: 44px; padding: 10px 18px 8px; white-space: normal; font-size: var(--fs-text); }
+.prose .sep { font-size: 1em; }
+.speed .theme-float { display: block; left: 20px; bottom: 20px; transform: none; }
+@media (max-width: 1023px) {
+  .speed .theme-float { left: 12px; bottom: 12px; }
+}
+@media (max-width: 767px) {
+  .speed .hero { padding-top: 28px; }
+  .back-to .arrow { position: static; }
+  .speed .article { margin-top: 16px; }
+  /* светлая тема: название и ссылка назад не заходят на кристалл */
+  [data-theme="light"] .speed .back-to { padding-right: 104px; }
+  [data-theme="light"] .speed .prose h1 { padding-right: 56px; }   /* длинное «доказательств,» должно влезать целиком */
+}
+:root, [data-theme="dark"] { --back: #ffffff; --read: #a5abd1; --speed-h1: #ffffff; --w-back: 400; }
+[data-theme="light"] { --back: #17558c; --read: #17558c; --speed-h1: #17558c; --w-back: 500; }
+:root { --fs-back: 17px; --fs-speed-h1: 36.5px; }
+@media (max-width: 767px) { :root { --fs-back: 15px; --fs-speed-h1: 29.5px; } }
+
+/* ---------- 16. Печать — светлая ---------- */
 @media print {
   :root, [data-theme] {
     --page: #fff; --text: #000; --h1: #000; --h2: #17558c; --h3: #17558c; --quote: #1f2754; --tr: #444; --link: #0054b3;
