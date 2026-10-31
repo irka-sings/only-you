@@ -213,7 +213,11 @@
   var saveTimer = null;
   function savePlace() {
     clearTimeout(saveTimer);
-    saveTimer = setTimeout(function () { store.set(KEY, String(Math.round(window.scrollY))); }, 300);
+    saveTimer = setTimeout(function () {
+      // дочитали до конца — память о месте сбрасывается: вернувшись, человек начнёт сначала
+      var atEnd = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - window.innerHeight * 0.5;
+      store.set(KEY, atEnd ? '0' : String(Math.round(window.scrollY)));
+    }, 300);
   }
   var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
   var navType = nav ? nav.type : 'navigate';

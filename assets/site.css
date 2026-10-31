@@ -894,6 +894,15 @@ s { text-decoration-thickness: 1.5px; }
   --head: calc(var(--col) + 2 * var(--pad));   /* руна встаёт между краем окна и текстовой поверхностью */
 }
 .speed .page { margin-right: 0; }
+/* без сайдбара шапка во всю ширину окна: пороги файлов сдвинуты на ширину сайдбара */
+@media (min-width: 1313px) and (max-width: 1920px) {
+  [data-theme="dark"] .speed .hero-bg { background-image: url(header/only-you-header-dark-1920.webp); }
+  [data-theme="light"] .speed .hero-bg { background-image: url(header/only-you-header-light-1920.webp); }
+}
+@media (min-width: 1921px) {
+  [data-theme="dark"] .speed .hero-bg { background-image: url(header/only-you-header-dark-2560.webp); }
+  [data-theme="light"] .speed .hero-bg { background-image: url(header/only-you-header-light-2560.webp); }
+}
 .speed .hero { padding-top: 56px; }
 .back-to {
   position: relative;
@@ -910,7 +919,14 @@ s { text-decoration-thickness: 1.5px; }
 .back-to:hover { text-decoration: underline; }
 /* не больше двух строк, лишнее — многоточием по целому слову */
 .back-to { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
-.back-to .arrow { position: absolute; left: calc(var(--pad) - 1.4em); }
+.back-to .arrow {
+  position: absolute;
+  top: 50%;
+  left: calc(var(--pad) - 1.15em);
+  transform: translateY(-52%);
+  font-size: 1.75em;     /* крупнее и по середине между строками (Irka, 2026-10-31) */
+  line-height: 1;
+}
 .speed .article { margin-top: 24px; }
 .speed .prose h1 {
   margin: 0;
@@ -922,25 +938,36 @@ s { text-decoration-thickness: 1.5px; }
   hyphens: manual;
   overflow-wrap: normal;   /* слово в заголовке не рвём посередине */
 }
+.speed .prose .read-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: var(--line);   /* от H1 — строка (Irka, 2026-10-31) */
+}
 .speed .prose .read {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: calc(var(--line) * .5);
   color: var(--read);
 }
+.speed .read-theme { display: none; }
 .speed .prose .read svg { width: 1.1em; height: 1.1em; fill: currentColor; flex: none; }
-.speed .prose > .read + * { margin-top: var(--line); }
+.speed .prose > .read-row + * { margin-top: var(--line); }
 .prose .to-full { text-align: center; margin-top: calc(var(--line) * 1.5); }
-.prose .to-full .btn { height: auto; min-height: 44px; padding: 10px 18px 8px; white-space: normal; font-size: var(--fs-text); }
+.prose .to-full .btn { height: auto; min-height: 44px; padding: 7px 18px 10px; white-space: normal; font-size: var(--fs-text); line-height: 1.2; }
+[data-theme="dark"] .prose .to-full .btn { font-weight: 300; }
 .prose .sep { font-size: 1em; }
 .speed .theme-float { display: block; left: 20px; bottom: 20px; transform: none; }
+/* без сайдбара на узких экранах плавающая кнопка ложилась на текст — переезжает в строку «10 минут» */
 @media (max-width: 1023px) {
-  .speed .theme-float { left: 12px; bottom: 12px; }
+  .speed .theme-float { display: none; }
+  .speed .read-theme { display: block; }
 }
 @media (max-width: 767px) {
   .speed .hero { padding-top: 28px; }
-  .back-to .arrow { position: static; }
+  .back-to { padding-left: calc(var(--pad) + 2em); }
+  .back-to .arrow { left: var(--pad); }
   .speed .article { margin-top: 16px; }
   /* светлая тема: название и ссылка назад не заходят на кристалл */
   [data-theme="light"] .speed .back-to { padding-right: 104px; }

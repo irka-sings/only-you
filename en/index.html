@@ -14,10 +14,13 @@
 <link rel="icon" href="../design/only-you-favicon_32px.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="../design/only-you-apple-touch-icon.png">
 <script>
-/* тема — до отрисовки, чтобы не было вспышки: выбор гостя → настройка системы → тёмная */
+/* тема — до отрисовки, чтобы не было вспышки: выбор гостя → (телефон) настройка системы → тёмная.
+   На компьютере с мышью настройку системы не слушаем: в Windows «светлая» стоит по умолчанию,
+   её почти никто не выбирал сам (Irka, 2026-10-31) */
 (function () {
   var t; try { t = localStorage.getItem('oy-theme'); } catch (e) {}
-  if (t !== 'light' && t !== 'dark') t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  var desktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (t !== 'light' && t !== 'dark') t = (!desktop && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
   document.documentElement.dataset.theme = t;
 })();
 </script>
