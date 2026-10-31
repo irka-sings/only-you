@@ -86,6 +86,12 @@
     marker.classList.toggle('on', mid > l.top + 10 && mid < l.bottom - 10);
   }
 
+  // в полосе меню вверху страницы — название первого раздела, а не «Начало»
+  function barLabel(i) {
+    var k = (i === 0 && items[0].classList.contains('top') && items[1]) ? 1 : i;
+    return items[k].querySelector('a').innerHTML;
+  }
+
   function setCurrent(i) {
     if (i === current) return;
     if (current >= 0) items[current].classList.remove('is-current');
@@ -94,7 +100,7 @@
     items[i].classList.add('is-current');
     items[i].querySelector('a').setAttribute('aria-current', 'location');
     items.forEach(function (li, k) { if (k !== i) li.querySelector('a').removeAttribute('aria-current'); });
-    if (barTitle && !root.classList.contains('menu-open')) barTitle.innerHTML = items[i].querySelector('a').innerHTML;
+    if (barTitle && !root.classList.contains('menu-open')) barTitle.innerHTML = barLabel(i);
     // в открытом мобильном меню «ты здесь» не меняется под пальцем; в сайдбаре — держим по центру
     if (!narrow.matches && !hoverSide) centerList(i, true);
     placeMarker();
@@ -111,6 +117,9 @@
     }
     // конец страницы — последний раздел, даже если его заголовок не дошёл до линии
     if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) i = heads.length - 1;
+    // пункт «Начало» (первый) есть только в мобильном меню; на десктопе вверху страницы текущий — TL;DR
+    var hasTop = items.length && items[0].classList.contains('top');
+    if (hasTop && !narrow.matches && i < 1) i = 1;
     setCurrent(Math.max(i, 0));
   }
 
@@ -147,7 +156,7 @@
   function closeMenu() {
     root.classList.remove('menu-open');
     menubar.setAttribute('aria-expanded', 'false');
-    if (current >= 0) barTitle.innerHTML = items[current].querySelector('a').innerHTML;
+    if (current >= 0) barTitle.innerHTML = barLabel(current);
   }
   if (menubar) {
     menubar.addEventListener('click', function () {

@@ -116,10 +116,10 @@
   --fs-card: 17px;
   --fs-h2: 36.5px;
   --fs-h3: 26.5px;
-  --fs-text: 21px;
+  --fs-text: 20px;     /* было 21 (Irka, 2026-10-31) */
   --fs-qmark: 30.5px;
-  --fs-quote: 20px;
-  --fs-tr: 18px;
+  --fs-quote: 19px;    /* цитата и перевод — на те же ступени ниже текста */
+  --fs-tr: 17px;
   --fs-c2: 22px;
   --fs-c3: 19px;
   --line: calc(var(--fs-text) * 1.3);   /* единица воздуха — строка основного текста */
@@ -143,8 +143,8 @@
     --fs-author: 15px;
     --fs-btn: 13.5px;
     --fs-card: 16.5px;
-    --fs-h2: 27px;
-    --fs-h3: 19.5px;
+    --fs-h2: 28.5px;   /* +1 пункт (Irka, 2026-10-31) */
+    --fs-h3: 21px;
     --fs-text: 16.5px;
     --fs-qmark: 24.5px;
     --fs-quote: 16.5px;
@@ -179,6 +179,7 @@ html {
 /* светлая тема: корень страницы на тон темнее, чем фон текста. Chrome на Android красит полосу
    системных кнопок по корню — так она еле-еле отличается от страницы (опыт, Irka 2026-10-30) */
 [data-theme="light"] { background: #cfe0f3; }
+[data-theme="dark"] { background: #171b32; }   /* то же для тёмной: на тон темнее #1b2039 (Irka, 2026-10-31) */
 body {
   min-height: 100vh;
   margin: 0;
@@ -412,7 +413,7 @@ button { font: inherit; color: inherit; }
   background: var(--btn);
   color: var(--btn-fg);
   font-size: var(--fs-btn);
-  font-weight: 500;
+  font-weight: 400;   /* на шаг тоньше (было 500; Irka, 2026-10-31) */
   line-height: 1;
   text-decoration: none;
   white-space: nowrap;
@@ -478,6 +479,13 @@ button { font: inherit; color: inherit; }
   z-index: 41;
 }
 
+@media (min-width: 1024px) {
+  .theme-float .half { width: 34px; height: 32px; }
+  .theme-float .half svg { width: 17px; height: 17px; }
+  .theme-float .switch, .theme-float .half:first-child { border-radius: 6px 0 0 6px; }
+  .theme-float .half:last-child { border-radius: 0 6px 6px 0; }
+  .theme-float .switch { border-radius: 6px; }
+}
 @media (min-width: 1024px) and (max-width: 1135px) {
   .theme-float { display: none; }
 }
@@ -572,7 +580,8 @@ button { font: inherit; color: inherit; }
   overflow-wrap: break-word;
 }
 
-:where(.prose) p { margin: 0; }   /* сброс без веса: воздух задают правила раздела 9 */
+:where(.prose) p { margin: 0; }
+[data-theme="light"] .prose :is(p, li) { letter-spacing: -.006em; }   /* чуть плотнее в светлой (Irka, 2026-10-31) */   /* сброс без веса: воздух задают правила раздела 9 */
 
 :where(.prose) :is(h2, h3) { margin: 0; }
 :where(.prose) :is(figure, blockquote) { margin-block: 0; }   /* у браузера свои отступы — убираем */
@@ -603,6 +612,10 @@ button { font: inherit; color: inherit; }
 }
 
 .prose h3.center { color: var(--text); text-align: center; }
+/* «Что установлено» — кульминация: цветом основного текста, а не синим (Irka, 2026-10-31) */
+.prose h2#chto-ustanovleno { color: var(--text); }
+/* плашка «Вывод не может быть сделан без фактов» — размер и начертание H3-Center, в содержание не входит */
+.prose .plaque.diamond > .c { font-size: var(--fs-h3); font-weight: 500; line-height: 1.1; text-wrap: balance; }
 
 .prose .b { font-weight: var(--w-bold); }
 /* .arr — строка из стрелок; крупнее теперь все стрелки сразу (size-adjust в fonts.css) */
@@ -631,6 +644,9 @@ button { font: inherit; color: inherit; }
 /* медиа подряд — несколько пикселей, а не строка */
 .prose > .m + .m { margin-top: var(--media-gap); }
 
+/* стрелка Element-Center: сверху чуть меньше строки (Irka, 2026-10-31) */
+.prose > * + .el.arr { margin-top: calc(var(--line) * .7); }
+
 /* знак по центру (❄ ↓ 💧) → полстроки до своего абзаца */
 .prose > .el + * { margin-top: calc(var(--line) * .5); }
 
@@ -654,7 +670,7 @@ button { font: inherit; color: inherit; }
 .qmark {
   font-size: var(--fs-qmark);
   line-height: 1;
-  height: .62em;          /* знак ❝ сидит в верхней части строки — срезаем пустой низ */
+  height: .72em;          /* знак ❝ сидит в верхней части строки — срезаем часть пустого низа */
   color: var(--quote);
   user-select: none;
 }
@@ -688,6 +704,8 @@ button { font: inherit; color: inherit; }
 .plaque > h3 + .orn { margin-top: calc(var(--line) * .15); }
 .orn { white-space: nowrap; letter-spacing: 0; user-select: none; }
 .el, .sep { user-select: none; }
+/* снежинка-эмодзи почти белая — в светлой теме тонкая синяя обводка */
+[data-theme="light"] .el.snow { filter: drop-shadow(0 0 .6px #17558c) drop-shadow(0 0 .6px #17558c) drop-shadow(0 0 .4px #17558c); }
 s { text-decoration-thickness: 1.5px; }
 
 /* ---------- 12. Картинки и видео ---------- */
@@ -771,7 +789,7 @@ s { text-decoration-thickness: 1.5px; }
   position: absolute;
   left: 0;
   top: 0;
-  width: 9px;    /* половинка: маркер не выходит за сайдбар и не выглядит ручкой (Irka, 2026-10-30) */
+  width: 11px;   /* как в мобильном меню; внутри сайдбара (Irka, 2026-10-31) */
   height: 44px;
   border-radius: 0 6px 6px 0;
   background: var(--toc-cur);
@@ -783,7 +801,8 @@ s { text-decoration-thickness: 1.5px; }
 
 .toc-close,
 .menubar,
-.menu-dim { display: none; }
+.menu-dim,
+.toc-list .top { display: none; }
 
 /* ---------- 14. Узкие экраны: верхнее меню ---------- */
 @media (max-width: 1023px) {
@@ -825,6 +844,7 @@ s { text-decoration-thickness: 1.5px; }
   .toc-marker { display: none; }
   .toc-list a { color: var(--menu-item); min-height: 44px; display: flex; align-items: center; }
   .toc-list li + li { margin-top: 14px; }
+  .toc-list .top { display: block; }
   .toc-list .l3 a { padding-left: 29px; }
   .toc-list .is-current a { color: var(--menu-cur); }
   .toc-list .l2.is-current a { font-size: calc(var(--fs-c2) + 5px); }
