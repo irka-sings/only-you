@@ -28,12 +28,12 @@
   --side-shadow: rgba(0, 0, 0, .7);
   --toc-head: #ffffff;
   --toc-cur: #ffffff;
-  --toc-item: #8f919e;
+  --toc-item: #a5a7b3;   /* светлее (Irka, 2026-11-02; было #8f919e) */
   --toc-bar: #4a4f65;
   --menu: #13162c;
   --menu-head: #ffffff;
   --menu-cur: #ffffff;
-  --menu-item: #8f919e;
+  --menu-item: #a5a7b3;   /* как в сайдбаре */
   --menu-bar: #4a4f65;
   --menu-dim: rgba(27, 32, 57, .8);
   /* карточка «Обо мне» */
@@ -66,7 +66,7 @@
   --tr: #5e5f63;
   --select: rgba(67, 133, 247, .35);
   --btn: #d9eafa;
-  --btn-fg: #4778a3;   /* тише прежнего #17558c */
+  --btn-fg: #3a6893;   /* контраст 4,8 (было #4778a3 — 3,8) */
   --btn-on: #17558c;
   --btn-on-line: #d9eafa;
   --btn-on-fg: #ffffff;
@@ -75,12 +75,12 @@
   --side-shadow: rgba(0, 0, 0, .3);
   --toc-head: #17558c;
   --toc-cur: #17558c;
-  --toc-item: #5d89b0;
+  --toc-item: #3a6893;   /* контраст 4,8 (было #5d89b0 — 3,0) */
   --toc-bar: #a2bbd1;
   --menu: #17558c;
   --menu-head: #ffffff;
   --menu-cur: #ffffff;
-  --menu-item: #a2bbd1;
+  --menu-item: #b3d6f4;   /* контраст 5,1 (было #a2bbd1 — 3,9) */
   --menu-bar: #4778a3;
   --menu-dim: rgba(23, 85, 140, .5);
   --card: #b3d6f4;
@@ -985,6 +985,9 @@ s { text-decoration-thickness: 1.5px; }
 [data-theme="light"] { --back: #17558c; --read: #17558c; --speed-h1: #17558c; --w-back: 500; }
 :root { --fs-back: 17px; --fs-speed-h1: 36.5px; }
 @media (max-width: 767px) { :root { --fs-back: 15px; --fs-speed-h1: 29.5px; } }
+
+/* картинки на белом фоне в тёмной теме — приглушены, чтобы не слепили (признак ставит сборка, Irka 2026-11-02) */
+[data-theme="dark"] .m.light img { filter: brightness(.8); }
 
 /* ---------- 16. Печать — светлая ---------- */
 @media print {
