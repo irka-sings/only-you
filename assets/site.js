@@ -86,8 +86,10 @@
     marker.classList.toggle('on', mid > l.top + 10 && mid < l.bottom - 10);
   }
 
-  // в полосе меню вверху страницы — название первого раздела, а не «Начало»
+  // в полосе меню: пока страницу не прокрутили ни на пиксель — «Содержание» (Irka, 2026-11-02);
+  // дальше — текущий раздел, а вместо «Начала» — название первого раздела
   function barLabel(i) {
+    if (window.scrollY <= 0) return barTitle.parentNode.dataset.label;
     var k = (i === 0 && items[0].classList.contains('top') && items[1]) ? 1 : i;
     return items[k].querySelector('a').innerHTML;
   }
@@ -100,7 +102,6 @@
     items[i].classList.add('is-current');
     items[i].querySelector('a').setAttribute('aria-current', 'location');
     items.forEach(function (li, k) { if (k !== i) li.querySelector('a').removeAttribute('aria-current'); });
-    if (barTitle && !root.classList.contains('menu-open')) barTitle.innerHTML = barLabel(i);
     // в открытом мобильном меню «ты здесь» не меняется под пальцем; в сайдбаре — держим по центру
     if (!narrow.matches && !hoverSide) centerList(i, true);
     placeMarker();
@@ -121,6 +122,10 @@
     var hasTop = items.length && items[0].classList.contains('top');
     if (hasTop && !narrow.matches && i < 1) i = 1;
     setCurrent(Math.max(i, 0));
+    if (barTitle && current >= 0 && !root.classList.contains('menu-open')) {
+      var t = barLabel(current);
+      if (barTitle.innerHTML !== t) barTitle.innerHTML = t;
+    }
   }
 
   var ticking = false;
