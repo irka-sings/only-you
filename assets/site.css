@@ -42,8 +42,8 @@
   /* начертания: в тёмной теме светлое на тёмном выглядит жирнее */
   --w-h1: 500;
   --w-author: 300;
-  --w-text: 400;   /* на шаг толще (Irka, 2026-11-02; было 300) */
-  --w-bold: 600;   /* было 500 */
+  --w-text: 300;   /* обычные экраны (компьютер): светлое на тёмном и так выглядит жирнее */
+  --w-bold: 500;
   --w-toc: 400;
   /* руна в шапке */
   --rune-w: 340px;
@@ -958,7 +958,12 @@ s { text-decoration-thickness: 1.5px; }
 .speed .prose > .read-row + * { margin-top: var(--line); }
 .prose .to-full { text-align: center; margin-top: calc(var(--line) * 1.5); }
 .prose .to-full .btn { height: auto; min-height: 44px; padding: 7px 18px 10px; white-space: normal; font-size: var(--fs-text); line-height: 1.2; }
-[data-theme="dark"] .prose .to-full .btn { font-weight: 400; }   /* как основной текст (было 300) */
+[data-theme="dark"] .prose .to-full .btn { font-weight: var(--w-text); }   /* как основной текст */
+
+/* экраны высокой плотности (телефоны, ретина): штрих тоньше — в тёмной теме текст на шаг толще (Irka, 2026-11-02) */
+@media (min-resolution: 2dppx) {
+  [data-theme="dark"] { --w-text: 400; --w-bold: 600; }
+}
 .prose .sep { font-size: 1em; }
 .speed .theme-float { display: block; left: 20px; bottom: 20px; transform: none; }
 /* без сайдбара на узких экранах плавающая кнопка ложилась на текст — переезжает в строку «10 минут» */
