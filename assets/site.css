@@ -583,6 +583,7 @@ button { font: inherit; color: inherit; }
 }
 
 :where(.prose) p { margin: 0; }
+.prose :is(p, li) { word-spacing: .04em; }   /* пробел между словами на ~1 px шире: у Fira буквы стоят свободно, слова слипаются (Irka, 2026-11-02) */
 [data-theme="light"] .prose :is(p, li) { letter-spacing: -.006em; }   /* чуть плотнее в светлой (Irka, 2026-10-31) */   /* сброс без веса: воздух задают правила раздела 9 */
 
 :where(.prose) :is(h2, h3) { margin: 0; }
