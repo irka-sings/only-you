@@ -7,7 +7,8 @@
   color-scheme: dark;
   --page: #1b2039;   /* чуть темнее прежнего #1e233f (Irka, 2026-10-29) */
   --text: #ffffff;
-  --link: #6aa5ff;   /* светлее прежнего #4385f7 */
+  --link: #5c9eff;   /* оттенок палитры, насыщенность на пределе экрана; контраст 5,9 (Irka, 2026-11-09; было #6aa5ff) */
+  --link-visited: #a5abd1;   /* посещённая — приглушённый сиреневый из палитры; контраст 7,1 (Irka, 2026-11-09) */
   --h1: #ffffff;
   --author: #ffffff;
   --h2: #ffffff;
@@ -57,6 +58,7 @@
   --page: #d9eafa;
   --text: #07080f;
   --link: #004ee6;   /* насыщенный экранный синий (Irka, 2026-10-31: «как в CMYK»); контраст 5,3 */
+  --link-visited: #4a6391;   /* посещённая — приглушённый синий; контраст 4,9 (Irka, 2026-11-09) */
   --h1: #1e233f;
   --author: #07080f;
   --h2: #17558c;
@@ -200,6 +202,7 @@ body {
 
 a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: .15em; }
 a:hover { text-decoration-thickness: 2px; }
+.prose a:not(.btn):visited { color: var(--link-visited); }   /* посещённые ссылки в тексте — блёклее (Irka, 2026-11-09) */
 
 b, strong { font-weight: var(--w-bold); }
 
@@ -987,12 +990,12 @@ s { text-decoration-thickness: 1.5px; }
 @media (max-width: 767px) { :root { --fs-back: 15px; --fs-speed-h1: 29.5px; } }
 
 /* картинки на белом фоне в тёмной теме — приглушены, чтобы не слепили (признак ставит сборка, Irka 2026-11-02) */
-[data-theme="dark"] .m.light img { filter: brightness(.8); }
+[data-theme="dark"] .m.light img { filter: brightness(.9); }   /* было .8 — серело (Irka, 2026-11-09) */
 
 /* ---------- 16. Печать — светлая ---------- */
 @media print {
   :root, [data-theme] {
-    --page: #fff; --text: #000; --h1: #000; --h2: #17558c; --h3: #17558c; --quote: #1f2754; --tr: #444; --link: #0054b3;
+    --page: #fff; --text: #000; --h1: #000; --h2: #17558c; --h3: #17558c; --quote: #1f2754; --tr: #444; --link: #0054b3; --link-visited: #0054b3;
     --w-text: 400; --w-bold: 700; --w-h1: 600;
   }
   .toc, .menubar, .theme-float, .buttons, .hero-bg, .rune, .about { display: none !important; }
