@@ -328,6 +328,9 @@ button { font: inherit; color: inherit; }
   line-height: 1.15;
   text-wrap: balance;
 }
+/* Тёмная тема: мягкая чёрная подсветка под заголовком и подзаголовком — гасит пестроту звёзд под буквами (Irka, 2026-11-11). В спидране не нужна — там подложка. */
+[data-theme="dark"] .head h1,
+[data-theme="dark"] .subhead { text-shadow: 0 0 6px rgba(0,0,0,.9), 0 0 16px rgba(0,0,0,.75), 0 0 32px rgba(0,0,0,.55); }
 
 .byline {
   display: flex;
