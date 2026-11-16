@@ -188,6 +188,7 @@
       es.forEach(function (e) {
         if (!e.isIntersecting) return;
         var v = e.target;
+        if (v.dataset.poster) v.poster = v.dataset.poster;
         v.src = v.dataset.src;
         v.preload = 'metadata';
         // немой ролик, уже стоящий в кадре, запускаем, как только он готов
@@ -210,7 +211,7 @@
     }, { threshold: 0.25 });
     videos.forEach(function (v) { loader.observe(v); player.observe(v); });
   } else {
-    videos.forEach(function (v) { v.src = v.dataset.src; });
+    videos.forEach(function (v) { if (v.dataset.poster) v.poster = v.dataset.poster; v.src = v.dataset.src; });
   }
 
   /* ---------- Место чтения ---------- */
