@@ -191,6 +191,11 @@
         if (v.dataset.poster) v.poster = v.dataset.poster;
         v.src = v.dataset.src;
         v.preload = 'metadata';
+        // немой ролик: как только загрузился первый кадр, заглушку снимаем (подмена — ещё за краем экрана),
+        // чтобы при запуске не было скачка «заглушка → первый кадр»; при «уменьшении движения» ролик стоит — заглушку оставляем
+        if (v.classList.contains('loop') && v.dataset.poster && !reduceMotion) {
+          v.addEventListener('loadeddata', function () { v.removeAttribute('poster'); }, { once: true });
+        }
         // немой ролик, уже стоящий в кадре, запускаем, как только он готов
         if (v.classList.contains('loop')) {
           v.addEventListener('canplay', function () { if (v.oyVisible && !reduceMotion) { var p = v.play(); if (p) p.catch(function () {}); } }, { once: true });
