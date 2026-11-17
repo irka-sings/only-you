@@ -1015,8 +1015,17 @@ s { text-decoration-thickness: 1.5px; }
   .m.light img { filter: none; }
   /* PDF (сборка tools/pdf_build.py) */
   /* на белом без руны яркий синий выглядит дёшево — заголовки цвета фона тёмной темы (Irka, 2026-11-17) */
-  html.pdf { --h2: #1b2039; --h3: #1b2039; --pdf-cap: #4a5175; }
-  html.pdf .keep-next { break-after: avoid; }   /* абзац с двоеточием перед медиа — не отрывать от медиа */
+  html.pdf { --h2: #364377; --h3: #364377; --pdf-cap: #5f6a9e; }   /* заголовки #364377 (Irka, 2026-11-17), подписи — тот же, светлее */
+  /* A4: картинки на всю колонку — слишком много краски при печати: 2/3 колонки, узкие — пропорционально (Irka, 2026-11-17) */
+  html.pdf-a4 .m { --w: 66.7%; }
+  html.pdf-a4 .m.w75 { --w: 50%; }
+  html.pdf-a4 .m.w50 { --w: 33.3%; }
+  html.pdf-a4 .pdf-about { max-width: 66.7%; }
+  html.pdf-a4 .tr { font-size: .8em; }   /* перевод — кеглем подписи под видео */
+  /* абзац с двоеточием перед медиа: его последняя строка-предложение (после последнего <br>) и медиа завёрнуты сборкой
+     в .pdf-keep — вместе не рвутся (break-after/before: avoid Chromium выполняет плохо: уносит на новую страницу и то, что влезает) */
+  html.pdf .pdf-keep { break-inside: avoid; }
+  html.pdf .pdf-keep > p.pdf-tail { margin-top: 0; }
   /* видео → заглушка с ▶ и подписью-ссылкой на место ролика на сайте */
   .pdf-poster { position: relative; display: block; }
   .pdf-play {
