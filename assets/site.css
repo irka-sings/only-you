@@ -1022,10 +1022,9 @@ s { text-decoration-thickness: 1.5px; }
   html.pdf-a4 .m.w50 { --w: 33.3%; }
   html.pdf-a4 .pdf-about { max-width: 66.7%; }
   html.pdf-a4 .tr { font-size: .8em; }   /* перевод — кеглем подписи под видео */
-  /* абзац с двоеточием перед медиа: его последняя строка-предложение (после последнего <br>) и медиа завёрнуты сборкой
-     в .pdf-keep — вместе не рвутся (break-after/before: avoid Chromium выполняет плохо: уносит на новую страницу и то, что влезает) */
+  /* абзац с двоеточием перед медиа: его последние строки и медиа завёрнуты сборкой в .pdf-keep — вместе не рвутся (см. KEEP_JS в pdf_build.py) */
   html.pdf .pdf-keep { break-inside: avoid; }
-  html.pdf .pdf-keep > p.pdf-tail { margin-top: 0; }
+  .tr::before { width: .5px; }   /* черта у перевода в PDF — тоньше (Irka, 2026-11-17) */
   /* видео → заглушка с ▶ и подписью-ссылкой на место ролика на сайте */
   .pdf-poster { position: relative; display: block; }
   .pdf-play {
