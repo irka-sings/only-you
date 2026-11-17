@@ -1007,4 +1007,28 @@ s { text-decoration-thickness: 1.5px; }
   .page { margin: 0; }
   .hero { padding-top: 0; }
   .m video { display: none; }
+  html, [data-theme], body { background: #fff !important; }
+  .m { width: min(var(--w), calc(80vh * var(--ar))); }        /* высокая картинка — не выше 80 % страницы */
+  .m, .m img, .pdf-poster, .plaque { break-inside: avoid; }   /* длинные цитаты и переводы — можно рвать, иначе полстраницы пустые */
+  .prose :is(h2, h3), .plaque { break-after: avoid; }
+  .prose p { orphans: 2; widows: 2; }
+  .m.light img { filter: none; }
+  /* PDF (сборка tools/pdf_build.py): видео → заглушка с ▶ и подписью-ссылкой на место ролика на сайте */
+  .pdf-poster { position: relative; display: block; }
+  .pdf-play {
+    position: absolute; left: 50%; top: 50%;
+    width: 15%; aspect-ratio: 1; min-width: 34px; max-width: 72px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: rgba(0, 0, 0, .45);
+    border: 2px solid rgba(255, 255, 255, .85);
+  }
+  .pdf-play::after {   /* треугольник ▶ */
+    content: ""; position: absolute; left: 38%; top: 28%;
+    border-style: solid; border-width: .22em 0 .22em .38em; border-color: transparent transparent transparent rgba(255, 255, 255, .95);
+    font-size: clamp(34px, 400%, 72px);
+    width: 0; height: 0;
+  }
+  .pdf-cap { margin-top: 6px; font-size: .8em; line-height: 1.25; text-align: center; }
+  .pdf-cap a { text-decoration: none; }
 }
