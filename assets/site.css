@@ -710,6 +710,8 @@ button { font: inherit; color: inherit; }
 /* ---------- 11. Плашки и знаки ---------- */
 .plaque > * { margin: 0; }
 .plaque > * + * { margin-top: calc(var(--line) * .5); }
+/* переход по ссылке на ролик (из PDF, AO3): ролик встаёт под верхней полосой, с небольшим запасом */
+.prose figure[id] { scroll-margin-top: calc(var(--bar-h) + 24px); }
 .plaque h3 { scroll-margin-top: calc(var(--bar-h) + (100vh - var(--bar-h)) * .25 + 20px); }
 .plaque > h3 + .orn { margin-top: calc(var(--line) * .15); }
 .orn { white-space: nowrap; letter-spacing: 0; user-select: none; }

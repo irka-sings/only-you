@@ -232,6 +232,18 @@
   }
   var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
   var navType = nav ? nav.type : 'navigate';
+  // переход по ссылке с якорем (на ролик из PDF/AO3): пока грузятся шрифты, строки другой длины и цель «уезжает» —
+  // после шрифтов прокручиваем к ней ещё раз, если человек сам ещё не листал
+  if (location.hash.length > 1) {
+    var userMoved = false;
+    ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (t) {
+      window.addEventListener(t, function () { userMoved = true; }, { once: true, passive: true });
+    });
+    var target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (target && document.fonts) document.fonts.ready.then(function () {
+      if (!userMoved) target.scrollIntoView({ block: 'start' });
+    });
+  }
   if (navType === 'navigate' && !location.hash) {
     var y = parseInt(store.get(KEY), 10);
     // ждём шрифты: до них строки другой длины и страница другой высоты
