@@ -816,6 +816,34 @@ s { text-decoration-thickness: 1.5px; }
 .menu-dim,
 .toc-list .top { display: none; }
 
+/* кнопка «скачать PDF» внизу содержания (Irka, 2026-11-17): контур, без заливки; A4 — от 768 px, узкий PDF — телефонам */
+.toc-pdfs { padding: 14px 22px 22px 28px; }
+/* с кнопкой внизу поля списка чуть меньше: 2 × 45vh не оставляли места кнопке, и она уезжала за край экрана */
+.toc:has(.toc-pdfs) .toc-list { padding-block: calc(45vh - 50px); }
+.toc-pdf {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 2px 14px 0;
+  border: 1.5px solid currentColor;
+  border-radius: 7px;
+  color: var(--toc-head);
+  font-size: var(--fs-btn);
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+}
+.toc-pdf:hover { filter: brightness(1.12); text-decoration: none; }
+.toc-pdf svg { width: 15px; height: 15px; flex: none; fill: currentColor; margin-top: -2px; }
+.toc-pdf.pdf-phone { display: none; }
+@media (max-width: 767px) {
+  .toc-pdf.pdf-a4 { display: none; }
+  .toc-pdf.pdf-phone { display: flex; }
+}
+
 /* ---------- 14. Узкие экраны: верхнее меню ---------- */
 @media (max-width: 1023px) {
   .menubar {
@@ -884,6 +912,9 @@ s { text-decoration-thickness: 1.5px; }
     cursor: pointer;
   }
   .toc-close svg { width: 22px; height: 22px; }
+  .toc-pdfs { padding: 12px var(--pad) 4px; background: var(--menu); }
+  .toc-pdfs { display: flex; justify-content: center; }
+  .toc-pdf { color: var(--menu-head); padding-inline: 22px; }   /* по ширине надписи, по центру — как в макете Irka */
 
   .menu-open .toc { transform: none; visibility: visible; transition: transform .2s ease; }
   .menu-dim {
