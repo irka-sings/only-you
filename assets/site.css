@@ -816,16 +816,12 @@ s { text-decoration-thickness: 1.5px; }
 .menu-dim,
 .toc-list .top { display: none; }
 
-/* кнопка «скачать PDF» внизу содержания (Irka, 2026-11-17): контур, без заливки; A4 — от 768 px, узкий PDF — телефонам */
-.toc-pdfs { display: flex; justify-content: center; padding: 30px 22px 26px 28px; }
-/* с кнопкой внизу поля списка чуть меньше: 2 × 45vh не оставляли места кнопке, и она уезжала за край экрана */
-@media (min-width: 1024px) { .toc:has(.toc-pdfs) .toc-list { padding-block: calc(45vh - 60px); } }
-/* кнопка — подальше от пунктов содержания (Irka, 2026-11-17): низ списка растворяется, пункты не подходят к кнопке вплотную */
-.toc:has(.toc-pdfs) .toc-list {
-  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 70px), transparent);
-          mask-image: linear-gradient(to bottom, #000 calc(100% - 70px), transparent);
-}
-.toc-pdf {
+/* кнопка «скачать PDF» — последний пункт содержания, после «P.S.», далеко от него: видна, только когда содержание
+   домотано до конца (решение 2026-11-10, Irka 2026-11-17). Контур, без заливки, по ширине надписи, по центру.
+   A4 — от 768 px, узкий PDF — телефонам. В подсветке текущей главы не участвует (site.js: li:not(.toc-pdfs)). */
+.toc-list li.toc-pdfs { display: flex; justify-content: center; margin-top: 34vh; padding-right: 6px; }
+.toc:has(.toc-pdfs) .toc-list { padding-bottom: 28px; }
+.toc-list .toc-pdf {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -841,13 +837,13 @@ s { text-decoration-thickness: 1.5px; }
   text-align: center;
   text-decoration: none;
 }
-.toc-pdf:hover { filter: brightness(1.12); text-decoration: none; }
-.toc-pdf svg { width: 15px; height: 15px; flex: none; fill: currentColor; margin-top: -2px;
+.toc-list .toc-pdf:hover { filter: brightness(1.12); text-decoration: none; }
+.toc-list .toc-pdf svg { width: 15px; height: 15px; flex: none; fill: currentColor; margin-top: -2px;
   color: color-mix(in srgb, currentColor 75%, var(--page) 25%); }   /* стрелка — цвет надписи с 25 % основного фона (Irka) */
-.toc-pdf.pdf-phone { display: none; }
+.toc-list .toc-pdf.pdf-phone { display: none; }
 @media (max-width: 767px) {
-  .toc-pdf.pdf-a4 { display: none; }
-  .toc-pdf.pdf-phone { display: flex; }
+  .toc-list .toc-pdf.pdf-a4 { display: none; }
+  .toc-list .toc-pdf.pdf-phone { display: flex; }
 }
 
 /* ---------- 14. Узкие экраны: верхнее меню ---------- */
@@ -918,8 +914,9 @@ s { text-decoration-thickness: 1.5px; }
     cursor: pointer;
   }
   .toc-close svg { width: 22px; height: 22px; }
-  .toc-pdfs { padding: 28px var(--pad) 6px; background: var(--menu); }
-  .toc-pdf { color: var(--menu-head); }
+  .toc-list li.toc-pdfs { margin-top: 30svh; padding-right: 16px; }
+  .toc-list .toc-pdf { color: var(--menu-head); }
+  .toc:has(.toc-pdfs) .toc-list { padding-bottom: 20px; }
 
   .menu-open .toc { transform: none; visibility: visible; transition: transform .2s ease; }
   .menu-dim {

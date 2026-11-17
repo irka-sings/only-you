@@ -58,7 +58,7 @@
   /* ---------- Содержание и «ты здесь» ---------- */
   var toc = document.getElementById('toc');
   var list = toc && toc.querySelector('.toc-list');
-  var items = list ? Array.prototype.slice.call(list.querySelectorAll('li')) : [];
+  var items = list ? Array.prototype.slice.call(list.querySelectorAll('li:not(.toc-pdfs)')) : [];
   var heads = items.map(function (li) {
     return document.getElementById(li.querySelector('a').getAttribute('href').slice(1));
   });
