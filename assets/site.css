@@ -488,6 +488,9 @@ button { font: inherit; color: inherit; }
 }
 
 @media (min-width: 1024px) {
+  /* виден, только когда верхний переключатель ушёл с экрана — класс .on ставит site.js (Irka, 2026-11-18) */
+  .theme-float { opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility .25s; }
+  .theme-float.on { opacity: 1; visibility: visible; }
   .theme-float .half { width: 34px; height: 32px; }
   .theme-float .half svg { width: 17px; height: 17px; }
   .theme-float .switch, .theme-float .half:first-child { border-radius: 6px 0 0 6px; }

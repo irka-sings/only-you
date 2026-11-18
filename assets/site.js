@@ -35,6 +35,31 @@
   narrow.addEventListener('change', paintTheme);
   paintTheme();
 
+  /* ---------- Плавающий переключатель темы (десктоп): виден, только когда верхний ушёл с экрана (Irka, 2026-11-18) ---------- */
+  (function () {
+    var fl = document.querySelector('.theme-float');
+    if (!fl) return;
+    var tops = Array.prototype.filter.call(document.querySelectorAll('[data-toggle-theme]'),
+      function (b) { return !fl.contains(b); });
+    if (!('IntersectionObserver' in window) || !tops.length) { fl.classList.add('on'); return; }
+    var inView = [];
+    function upd() {
+      // верхний считается видимым, если он вообще отрисован (на спидране-десктопе его нет) и хоть краем на экране
+      var seen = tops.some(function (b) { return inView.indexOf(b) >= 0 && b.getClientRects().length; });
+      fl.classList.toggle('on', !seen);
+    }
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        var i = inView.indexOf(e.target);
+        if (e.isIntersecting && i < 0) inView.push(e.target);
+        if (!e.isIntersecting && i >= 0) inView.splice(i, 1);
+      });
+      upd();
+    });
+    tops.forEach(function (b) { io.observe(b); });
+    window.addEventListener('resize', upd);
+  })();
+
   /* ---------- Попап «Обо мне»: под кнопкой, с зазором ---------- */
   var about = document.getElementById('about');
   // карточку открывают и кнопка «Обо мне», и имя автора — встаём под тем, на что нажали
