@@ -927,8 +927,7 @@ s { text-decoration-thickness: 1.5px; }
   .toc-list li.toc-pdfs { margin-top: 15svh; padding-right: 16px; }   /* в меню просвет меньше (Irka, 2026-11-17) */
   .toc-list .toc-pdf { color: var(--menu-head); }
   .toc-list .toc-doi { color: var(--menu-item); }
-  .toc-list .toc-doi { display: none; }   /* ВРЕМЕННО: в меню — после проверки Irka на телефоне */
-  .toc:has(.toc-pdfs) .toc-list { padding-bottom: 20px; }
+  .toc:has(.toc-pdfs) .toc-list { padding-bottom: 6px; }   /* до стрелки «закрыть» — меньше (Irka, 2026-11-18, со строкой DOI) */
 
   .menu-open .toc { transform: none; visibility: visible; transition: transform .2s ease; }
   .menu-dim {
