@@ -819,7 +819,17 @@ s { text-decoration-thickness: 1.5px; }
 /* кнопка «скачать PDF» — последний пункт содержания, после «P.S.», далеко от него: видна, только когда содержание
    домотано до конца (решение 2026-11-10, Irka 2026-11-17). Контур, без заливки, по ширине надписи, по центру.
    A4 — от 768 px, узкий PDF — телефонам. В подсветке текущей главы не участвует (site.js: li:not(.toc-pdfs)). */
-.toc-list li.toc-pdfs { display: flex; justify-content: center; margin-top: 34vh; padding-right: 6px; }
+.toc-list li.toc-pdfs { display: flex; flex-direction: column; align-items: center; margin-top: 34vh; padding-right: 6px; }
+/* DOI на Zenodo — строка под кнопкой: мелко, цветом второстепенных пунктов (Irka, 2026-11-18) */
+.toc-list .toc-doi {
+  margin-top: 12px;
+  color: var(--toc-item);
+  font-size: calc(var(--fs-btn) - 1.5px);
+  line-height: 1.3;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.toc-list .toc-doi:hover { text-decoration: underline; }
 .toc:has(.toc-pdfs) .toc-list { padding-bottom: 28px; }
 .toc-list .toc-pdf {
   display: flex;
@@ -916,6 +926,8 @@ s { text-decoration-thickness: 1.5px; }
   .toc-close svg { width: 22px; height: 22px; }
   .toc-list li.toc-pdfs { margin-top: 15svh; padding-right: 16px; }   /* в меню просвет меньше (Irka, 2026-11-17) */
   .toc-list .toc-pdf { color: var(--menu-head); }
+  .toc-list .toc-doi { color: var(--menu-item); }
+  .toc-list .toc-doi { display: none; }   /* ВРЕМЕННО: в меню — после проверки Irka на телефоне */
   .toc:has(.toc-pdfs) .toc-list { padding-bottom: 20px; }
 
   .menu-open .toc { transform: none; visibility: visible; transition: transform .2s ease; }
