@@ -926,7 +926,7 @@ s { text-decoration-thickness: 1.5px; }
   .toc-close svg { width: 22px; height: 22px; }
   .toc-list li.toc-pdfs { margin-top: 15svh; padding-right: 16px; }   /* в меню просвет меньше (Irka, 2026-11-17) */
   .toc-list .toc-pdf { color: var(--menu-head); }
-  .toc-list .toc-doi { color: var(--menu-item); }
+  .toc-list .toc-doi { color: var(--menu-item); min-height: 0; padding: 4px 0; margin-top: 8px; }   /* не строка меню в 44 px: от кнопки — 12 px, как на десктопе */
   .toc:has(.toc-pdfs) .toc-list { padding-bottom: 6px; }   /* до стрелки «закрыть» — меньше (Irka, 2026-11-18, со строкой DOI) */
 
   .menu-open .toc { transform: none; visibility: visible; transition: transform .2s ease; }
