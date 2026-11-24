@@ -1096,7 +1096,10 @@ s { text-decoration-thickness: 1.5px; }
   .pdf-author .name { font-size: var(--fs-author); font-weight: var(--w-author); line-height: 1.2; margin-top: 4px; }
   .pdf-about { margin-top: 6px; font-size: .78em; line-height: 1.35; }
   .pdf-about p { margin: 0; }
-  .pdf-about .pdf-online { margin-top: 6px; }   /* строка «Этот текст на сайте, с видео» — только в версии для Zenodo (--zenodo) */
+  /* строки «Этот текст на сайте, с видео: …» и «DOI: …» — во всех PDF; вся строка — ссылка цветом текста, как в v1.0 на Zenodo */
+  .pdf-about .pdf-online { margin-top: 6px; }
+  .pdf-about :is(.pdf-online, .pdf-doi) a { color: inherit; text-decoration: none; }
+  html.pdf-a4 .pdf-about .pdf-online { white-space: nowrap; }   /* A4: одной строкой, может выйти за 2/3 колонки (как в v1.0) */
   .pdf-about ul { list-style: none; margin: 4px 0 0; padding: 0; }
   .pdf-about li a { display: flex; align-items: center; gap: 6px; color: inherit; text-decoration: none; }
   .pdf-about li svg { width: 13px; height: 13px; fill: currentColor; flex: none; }
