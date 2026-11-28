@@ -1030,17 +1030,35 @@ s { text-decoration-thickness: 1.5px; }
 }
 @media (max-width: 767px) {
   .speed .hero { padding-top: 28px; }
-  .back-to { padding-left: calc(var(--pad) + 2em); }
-  .back-to .arrow { left: var(--pad); }
+  /* стрелка — по левому краю всего на странице (шапка уже даёт поле var(--pad)), текст ссылки — после неё (Irka, 2026-11-28) */
+  .back-to { padding-left: 2em; padding-right: 0; }
+  .back-to .arrow { left: -.06em; }
   .speed .article { margin-top: 16px; }
+  /* заголовочный комплекс (H1 + «10 минут») отбит от текста: две строки вместо одной (Irka, 2026-11-28) */
+  .speed .prose > .read-row + * { margin-top: calc(var(--line) * 2); }
+  /* тёмная тема: небо уходит в фон раньше — абзацы под заголовком ложатся на спокойный фон; под H1 и «10 минут» — подсветка цвета неба, как на главной (Irka, 2026-11-28) */
+  .speed .hero-bg {
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 22%, rgba(0, 0, 0, .55) 38%, rgba(0, 0, 0, .25) 52%, rgba(0, 0, 0, .08) 64%, transparent 74%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 22%, rgba(0, 0, 0, .55) 38%, rgba(0, 0, 0, .25) 52%, rgba(0, 0, 0, .08) 64%, transparent 74%);
+  }
+  [data-theme="dark"] .speed .prose h1,
+  [data-theme="dark"] .speed .prose .read { text-shadow: 0 0 8px rgba(4,8,18,.95), 0 0 20px rgba(4,8,18,.85), 0 0 40px rgba(4,8,18,.65); }
   /* светлая тема: название и ссылка назад не заходят на кристалл */
   [data-theme="light"] .speed .back-to { padding-right: 104px; }
   [data-theme="light"] .speed .prose h1 { padding-right: 56px; }   /* длинное «доказательств,» должно влезать целиком */
+  /* тёмная тема: заголовок тоже не доходит до правого края — руна не задавлена (Irka, 2026-11-28) */
+  [data-theme="dark"] .speed .prose h1 { padding-right: 56px; }
+  /* переключатель темы — одним значком цвета «10 минут»: показан режим, в который переключишь; без рамки и подложки (Irka, 2026-11-28) */
+  .speed .read-theme .switch { box-shadow: none; padding: 10px; margin: -10px -10px -10px 0; }
+  .speed .read-theme .half { background: none; border: 0; color: var(--read); width: auto; height: auto; padding: 0; filter: none; }
+  [data-theme="dark"] .speed .read-theme [data-half="dark"],
+  [data-theme="light"] .speed .read-theme [data-half="light"] { display: none; }
+  .speed .read-theme .half svg { width: 22px; height: 22px; }
 }
 :root, [data-theme="dark"] { --back: #ffffff; --read: #a5abd1; --speed-h1: #ffffff; --w-back: 400; }
 [data-theme="light"] { --back: #17558c; --read: #17558c; --speed-h1: #17558c; --w-back: 500; }
 :root { --fs-back: 17px; --fs-speed-h1: 36.5px; }
-@media (max-width: 767px) { :root { --fs-back: 15px; --fs-speed-h1: 29.5px; } }
+@media (max-width: 767px) { :root { --fs-back: 15px; --fs-speed-h1: 33px; } }   /* было 29.5 — крупнее (Irka, 2026-11-28) */
 
 /* картинки на белом фоне в тёмной теме — приглушены, чтобы не слепили (признак ставит сборка, Irka 2026-11-02) */
 [data-theme="dark"] .m.light img { filter: brightness(.9); }   /* было .8 — серело (Irka, 2026-11-09) */
