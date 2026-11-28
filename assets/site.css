@@ -477,6 +477,21 @@ button { font: inherit; color: inherit; }
   .switch .half:last-child { border-radius: 0 6px 6px 0; }
   .btn svg, .half svg { width: 17px; height: 17px; }
   .btn.speed { padding-left: 5px; gap: 4px; }
+  /* три кнопки не помещаются в строку (узкий экран или крупный масштаб в системе) — не переносятся, а уменьшаются (Irka, 2026-11-28) */
+  .hero { container-type: inline-size; }   /* на самом .buttons нельзя: внутри колонки .byline ряд тогда считает высоту как при нулевой ширине */
+}
+@container (max-width: 306px) {
+  .buttons { gap: 6px; }
+  .btn, .half { height: 30px; padding: 2px 6px 0; font-size: 12.5px; }
+  .switch .half { width: 30px; padding-left: 0; padding-right: 0; }
+  .btn svg, .half svg { width: 15px; height: 15px; }
+  .btn.speed { padding-left: 4px; gap: 3px; }
+}
+@container (max-width: 271px) {
+  .buttons { gap: 5px; }
+  .btn, .half { height: 28px; padding: 2px 5px 0; font-size: 11.5px; }
+  .switch .half { width: 27px; }
+  .btn svg, .half svg { width: 14px; height: 14px; }
 }
 
 /* плавающий переключатель темы: десктоп — левый нижний угол;
