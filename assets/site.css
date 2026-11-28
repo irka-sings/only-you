@@ -1034,8 +1034,9 @@ s { text-decoration-thickness: 1.5px; }
   .back-to { padding-left: 2em; padding-right: 0; }
   .back-to .arrow { left: -.06em; }
   .speed .article { margin-top: 16px; }
-  /* заголовочный комплекс (H1 + «10 минут») отбит от текста: две строки вместо одной (Irka, 2026-11-28) */
-  .speed .prose > .read-row + * { margin-top: calc(var(--line) * 2); }
+  /* «10 минут» со значком темы — с текстом, отбит от заголовка: две строки между H1 и «10 минут», одна — до текста;
+     строка «10 минут» уходит ниже кристалла/руны (Irka, 2026-11-28) */
+  .speed .prose .read-row { margin-top: calc(var(--line) * 2); }
   /* тёмная тема: небо уходит в фон раньше — абзацы под заголовком ложатся на спокойный фон; под H1 и «10 минут» — подсветка цвета неба, как на главной (Irka, 2026-11-28) */
   .speed .hero-bg {
     -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 22%, rgba(0, 0, 0, .55) 38%, rgba(0, 0, 0, .25) 52%, rgba(0, 0, 0, .08) 64%, transparent 74%);
